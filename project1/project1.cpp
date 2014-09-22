@@ -1,3 +1,7 @@
+// Author: Andrew Rush
+// Class: CSE 609
+// Date: 9/21/2014
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -45,6 +49,25 @@ int main(){
       for (int j = 0; j < m2Cols; j++){
         cout << m2.at(counter) << " ";
         counter++;
+      }
+      cout << endl;
+    }
+    sum = 0;
+    for (int i = 0; i < m1Rows; i++){
+      for (int j = 0; j < m2Cols; j++){
+	for (int k = 0; k < m1Cols; k++){
+	  sum += (m1.at(k+m1Cols*i)*(m2.at(j+m2Cols*k)));
+	}
+      mResult.push_back(sum);
+      sum = 0;
+      }
+    }
+    cout << endl;
+    counter = 0;
+    for (int i = 0; i < m1Rows; i++){
+      for (int j = 0; j < m2Cols; j++){
+       	cout << mResult.at(counter) << " ";
+	counter++;
       }
       cout << endl;
     }
