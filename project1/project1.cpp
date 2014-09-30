@@ -29,7 +29,7 @@ int main(){
   cin >> m2Cols;
 
   // Check matrix 1 columns is equal to matrix 2 rows. Fail: Give error text
-  if(m1Cols == m2Rows){
+  if(m1Cols == m2Rows && m1Rows > 0 && m2Rows > 0 && m1Cols > 0 && m2Cols >0){
     // Prompt User for Matrix 1 Input Values
     for (int i = 0; i < m1Rows; i++){
       for (int j = 0; j < m1Cols; j++){
