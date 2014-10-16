@@ -155,8 +155,8 @@ void calculateGrades(){
   for (int i = 0; i < classList.size(); i++){
     string tempGrade = "F";
     cout.width(2); cout << left << i+1 << ". ";
-    cout.width(10); cout << classList.at(i).firstName;
-    cout.width(10); cout << classList.at(i).lastName;
+    cout.width(12); cout << classList.at(i).firstName;
+    cout.width(12); cout << classList.at(i).lastName;
     cout.width(10); cout << classList.at(i).testScore;
     if (atof((classList.at(i).testScore).c_str()) > d){
       tempGrade = "D";
