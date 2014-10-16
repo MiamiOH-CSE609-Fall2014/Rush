@@ -150,7 +150,7 @@ void calculateGrades(){
     printf("F  below %4.1f", d);  cout << ("%") << endl << endl << endl;
   }
 
-  printf("Name                   Score     Grade\n");
+  printf("Name                        Score     Grade\n");
   cout << endl;
   for (int i = 0; i < classList.size(); i++){
     string tempGrade = "F";
