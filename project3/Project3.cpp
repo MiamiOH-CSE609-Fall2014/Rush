@@ -23,33 +23,59 @@ int main(int argc, char** argv){
 	tuple<int, int, string> finalTuple;
 	list<string> seqs;
 	map<string, int> myMap;
-	list<list<int>> myMatrix;	
+	list<list<int>> scoreMatrix;	
 	list<list<int>> firstMatrix;
 	string fileName;
 	fileName = argv[1];
 	myTuple = parseFastaFile(fileName);
+	cout << "        Digram Frequency Matrix" << endl;
+	cout << "           " << "A  G  C  T" << endl;
 	myMap = digramFreqScores(get<2>(myTuple));
-	firstMatrix = digramFreqMatrix(myMap);
+      	firstMatrix = digramFreqMatrix(myMap);
+	cout << "        A  ";
+	vector<string> tempString = {"G","C","T","","",""};
+	int tempStringIndex = 0;
 	for (list<list<int>>::iterator IT = firstMatrix.begin(); IT != firstMatrix.end(); IT++){
 		for (list<int>::iterator IT2 = (*IT).begin(); IT2 != (*IT).end(); IT2++){
 			cout << *IT2 << " ";
 		}
-		cout << endl;
+		cout << endl << "        " << tempString.at(tempStringIndex) << "  ";
+		tempStringIndex++;
 	}
-	myMatrix = parseScoreFile(argv[2]);
+	tempStringIndex = 0;
+	cout << endl << endl << "        Scoring Matrix" << endl;
+	cout << "           " << "A  G  C  T" << endl;
+	scoreMatrix = parseScoreFile(argv[2]);
+	cout << "        A  ";
+	for (list<list<int>>::iterator IT = scoreMatrix.begin(); IT != scoreMatrix.end(); IT++){
+          for (list<int>::iterator IT2 = (*IT).begin(); IT2 != (*IT).end(); IT2++){
+            cout << *IT2 << " ";
+          }
+          cout << endl << "        " << tempString.at(tempStringIndex) << "  ";
+          tempStringIndex++;
+        }
+	cout << endl;
 	int num_seq = 0;
 	cout << "How many sequences would you like to score?" << " ";
 	cin >> num_seq;
 	int i = 0;
 	string tempseq = "";
-	while (i < num_seq){
-		cout << "Enter Sequence:";
+	while ( i < num_seq){
+	  cout << "Enter Sequence #" << i+1 << " on a single line:" << endl;
 		cin >> tempseq;
 		seqs.push_back(tempseq);
 		i++;
 	}
-	finalTuple = findHighScore(get<2>(myTuple), seqs, myMatrix);
-	cout << get<2>(myTuple).size();
+	i = 0;
+	cout << endl << endl;
+	list<string>::iterator seqIT = seqs.begin();
+	while(i < num_seq){
+	  cout << "Sequence:" << endl << *seqIT << endl;
+	  cout << "Score: " << scoreSequence(get<2>(myTuple),*seqIT,scoreMatrix).second << " at position " << scoreSequence(get<2>(myTuple),*seqIT,scoreMatrix).first << endl << endl;
+	  i++;
+	  seqIT++;
+	}
+	finalTuple = findHighScore(get<2>(myTuple), seqs, scoreMatrix); 
 	return 0;
 }
 tuple<string, list<string>, string> parseFastaFile(string filepath){
@@ -280,9 +306,6 @@ tuple<int, int, string> findHighScore(string haystack, list<string> needles, lis
 			topScore = newScore;
 			topScoreIndex = newScoreIndex;
 			get<2>(high_scorer) = *IT;
-			cout << " IT:  " << *IT << endl;
-			cout << " Score: " << topScore << endl;
-			cout << " Index: " << topScoreIndex << endl;
 		}
 		get<0>(high_scorer) = topScoreIndex;
 		get<1>(high_scorer) = topScore;
